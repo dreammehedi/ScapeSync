@@ -15,4 +15,23 @@
   .smooth-transition {
     @apply transition-all duration-300 ease-linear;
   }
+  .custom-input-field {
+    @apply w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400
+w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400
+w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400
+w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400
+w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400;
+  }
+  .custom-label-field {
+    @apply absolute cursor-text bg-white px-1 left-2.5 top-3 text-slate-400 text-sm transition-all origin-left;
+
+    .peer:focus + &,
+    .peer.has-value + & {
+      @apply -top-2.5 text-xs text-slate-400 scale-90;
+    }
+
+    .peer-placeholder-shown + & {
+      @apply top-3 text-sm text-gray-400 scale-100;
+    }
+  }
 }

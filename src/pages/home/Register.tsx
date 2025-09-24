@@ -1,6 +1,7 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { Logo } from "../../shared/Logo";
 
@@ -9,10 +10,35 @@ export const Register = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
 
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle registration logic here
+
+    if (!formData.firstName) return toast.error("First name is required.");
+    if (!formData.lastName) return toast.error("Last name is required.");
+    if (!formData.email) return toast.error("Email is required.");
+    if (!formData.password) return toast.error("Password is required.");
+    if (!formData.confirmPassword)
+      return toast.error("Confirm Password is required.");
+    if (formData.password !== formData.confirmPassword)
+      return toast.error("Passwords do not match.");
+    if (!agreeTerms)
+      return toast.error("You must agree to the Terms and Privacy Policy.");
+
+    console.log(formData);
+    toast.success("Registration successful!");
   };
+
+  const getInputClass = (value: string) =>
+    `peer custom-input-field ${value ? "has-value" : ""}`;
+
   return (
     <>
       <Helmet>
@@ -21,50 +47,44 @@ export const Register = () => {
 
       <Logo />
 
-      {/* Main section */}
-      <main className="container mx-auto  flex flex-col items-center justify-center min-h-[calc(100vh-96px)] px-4 max-w-[480px]">
-        {/* Form header */}
+      <main className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-96px)] px-4 max-w-[480px]">
         <div className="flex flex-col items-center mb-6 md:mb-8 lg:mb-10 text-center">
           <h2 className="text-xl md:text-2xl font-bold">Create your Account</h2>
           <p className="text-gray-500">When Sports Meets Smart Tech.</p>
         </div>
 
-        {/* Form */}
         <form
-          action="#"
           onSubmit={handleRegister}
           className="grid grid-cols-2 gap-5 w-full"
         >
-          <div className="relative w-full col-span-2 md:col-span-1 ">
+          <div className="relative w-full col-span-2 md:col-span-1">
             <input
               type="text"
               id="firstName"
               placeholder=" "
-              className="peer w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400"
+              value={formData.firstName}
+              onChange={(e) =>
+                setFormData({ ...formData, firstName: e.target.value })
+              }
+              className={getInputClass(formData.firstName)}
             />
-            <label
-              htmlFor="firstName"
-              className="absolute cursor-text bg-white px-1 left-2.5 top-3 text-slate-400 text-sm transition-all origin-left
-                peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400
-                peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-slate-400 peer-focus:scale-90"
-            >
+            <label htmlFor="firstName" className="custom-label-field">
               First name
             </label>
           </div>
 
-          <div className="relative w-full col-span-2 md:col-span-1 ">
+          <div className="relative w-full col-span-2 md:col-span-1">
             <input
               type="text"
               id="lastName"
               placeholder=" "
-              className="peer w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400"
+              value={formData.lastName}
+              onChange={(e) =>
+                setFormData({ ...formData, lastName: e.target.value })
+              }
+              className={getInputClass(formData.lastName)}
             />
-            <label
-              htmlFor="lastName"
-              className="absolute cursor-text bg-white px-1 left-2.5 top-3 text-slate-400 text-sm transition-all origin-left
-                peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400
-                peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-slate-400 peer-focus:scale-90"
-            >
+            <label htmlFor="lastName" className="custom-label-field">
               Last name
             </label>
           </div>
@@ -74,14 +94,13 @@ export const Register = () => {
               type="email"
               id="email"
               placeholder=" "
-              className="peer w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              className={getInputClass(formData.email)}
             />
-            <label
-              htmlFor="email"
-              className="absolute cursor-text bg-white px-1 left-2.5 top-3 text-slate-400 text-sm transition-all origin-left
-                peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400
-                peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-slate-400 peer-focus:scale-90"
-            >
+            <label htmlFor="email" className="custom-label-field">
               Email
             </label>
           </div>
@@ -91,14 +110,13 @@ export const Register = () => {
               type={showPassword ? "text" : "password"}
               id="password"
               placeholder=" "
-              className="peer w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              className={getInputClass(formData.password)}
             />
-            <label
-              htmlFor="password"
-              className="absolute cursor-text bg-white px-1 left-2.5 top-3 text-slate-400 text-sm transition-all origin-left
-                peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400
-                peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-slate-400 peer-focus:scale-90"
-            >
+            <label htmlFor="password" className="custom-label-field">
               Password
             </label>
             <div
@@ -114,14 +132,13 @@ export const Register = () => {
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               placeholder=" "
-              className="peer w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all focus:outline-none focus:border-gray-400"
+              value={formData.confirmPassword}
+              onChange={(e) =>
+                setFormData({ ...formData, confirmPassword: e.target.value })
+              }
+              className={getInputClass(formData.confirmPassword)}
             />
-            <label
-              htmlFor="confirmPassword"
-              className="absolute cursor-text bg-white px-1 left-2.5 top-3 text-slate-400 text-sm transition-all origin-left
-                peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400
-                peer-focus:-top-2.5 peer-focus:text-xs peer-focus:text-slate-400 peer-focus:scale-90"
-            >
+            <label htmlFor="confirmPassword" className="custom-label-field">
               Confirm Password
             </label>
             <div
@@ -134,10 +151,10 @@ export const Register = () => {
 
           <div className="col-span-2 w-full flex items-center gap-2">
             <input
-              checked={agreeTerms}
-              onChange={() => setAgreeTerms((prev) => !prev)}
               type="checkbox"
               id="terms"
+              checked={agreeTerms}
+              onChange={() => setAgreeTerms((prev) => !prev)}
               className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
             />
             <label htmlFor="terms" className="text-sm text-gray-600">
@@ -149,7 +166,6 @@ export const Register = () => {
               <Link to="/privacy-policy" className="underline">
                 Privacy Policy
               </Link>
-              .
             </label>
           </div>
 
@@ -168,6 +184,7 @@ export const Register = () => {
           <div className="flex-1 h-px bg-gray-300"></div>
         </div>
 
+        {/* Continue with Google */}
         <div className="my-5 w-full">
           <button className="w-full text-[#637381] bg-white rounded-md py-3 cursor-pointer hover:bg-slate-100 transition-all font-medium border border-gray-300 flex items-center justify-center gap-2">
             <img src="/ic_google.png" alt="Google" /> Continue with Google

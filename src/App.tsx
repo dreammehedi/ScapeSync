@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
 import ErrorPage from "./pages/home/Error";
 import Home from "./pages/home/Home";
@@ -15,6 +16,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+      <Toaster />
     </>
   );
 }
