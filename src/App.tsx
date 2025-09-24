@@ -4,6 +4,7 @@ import { AuthSuccess } from "./pages/auth/AuthSuccess";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
 import { ResetPassword } from "./pages/auth/ResetPassword";
+import { VerifyAccount } from "./pages/auth/VerifyAccount";
 import ErrorPage from "./pages/Error";
 import Home from "./pages/home/Home";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -18,6 +19,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth-success" element={<AuthSuccess />} />
+        <Route path="/verify-account" element={<VerifyAccount />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<ErrorPage />} />
