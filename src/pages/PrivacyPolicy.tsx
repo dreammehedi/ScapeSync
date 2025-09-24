@@ -1,6 +1,6 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
 import { Link } from "react-router-dom";
-import { Logo } from "../../shared/Logo";
+import { Logo } from "../shared/Logo";
 
 export default function PrivacyPolicy() {
   return (

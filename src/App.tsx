@@ -1,11 +1,12 @@
 import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
-import ErrorPage from "./pages/home/Error";
+import { Login } from "./pages/auth/Login";
+import { Register } from "./pages/auth/Register";
+import { ResetPassword } from "./pages/auth/ResetPassword";
+import ErrorPage from "./pages/Error";
 import Home from "./pages/home/Home";
-import { Login } from "./pages/home/Login";
-import PrivacyPolicy from "./pages/home/PrivacyPolicy";
-import { Register } from "./pages/home/Register";
-import TermsOfService from "./pages/home/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<ErrorPage />} />

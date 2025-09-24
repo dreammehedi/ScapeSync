@@ -3,6 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { AuthCommonHeader } from "../../shared/AuthCommonHeader";
 import { Logo } from "../../shared/Logo";
 
 export const Register = () => {
@@ -48,10 +49,10 @@ export const Register = () => {
       <Logo />
 
       <main className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-96px)] px-4 max-w-[480px]">
-        <div className="flex flex-col items-center mb-6 md:mb-8 lg:mb-10 text-center">
-          <h2 className="text-xl md:text-2xl font-bold">Create your Account</h2>
-          <p className="text-gray-500">When Sports Meets Smart Tech.</p>
-        </div>
+        <AuthCommonHeader
+          title="Create your Account"
+          description="When Sports Meets Smart Tech."
+        />
 
         <form
           onSubmit={handleRegister}
