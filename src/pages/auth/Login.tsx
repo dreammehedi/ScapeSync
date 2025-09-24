@@ -2,32 +2,64 @@ import { Helmet } from "@dr.pogodin/react-helmet";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { storeAuthData } from "../../redux/feature/authStoreSlice";
+import { useLoginMutation } from "../../redux/pages/auth/authSlice";
 import { AuthCommonHeader } from "../../shared/AuthCommonHeader";
 import { Logo } from "../../shared/Logo";
+import { getUserToken, setUserToken } from "../../utils/handleUserToken";
 
 export const Login = () => {
+  const userToken = getUserToken();
+
   const [showPassword, setShowPassword] = useState(false);
   const [isRemember, setIsRemember] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
+  const [loginUser, { isLoading }] = useLoginMutation();
 
-    if (!formData.email) return toast.error("Email is required.");
-    if (!formData.password) return toast.error("Password is required.");
+  const handleLogin = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
 
-    console.log(formData);
-    toast.success("Login successful!");
+      if (!formData.email) return toast.error("Email is required.");
+      if (!formData.password) return toast.error("Password is required.");
+      if (formData.password.trim().length < 8)
+        return toast.error("Password must be 8 charecter long.");
+
+      const res = await loginUser({
+        email: formData.email,
+        password: formData.password,
+        remember_me: isRemember,
+      }).unwrap();
+      if (res.status) {
+        setUserToken(res.token);
+        dispatch(storeAuthData(res.data));
+        setFormData({ email: "", password: "" });
+        setIsRemember(false);
+        toast.success(res.message || "Login successful!");
+        navigate("/");
+      } else {
+        toast.error(res.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      toast.error(error?.message || error?.data?.message || "Login failed!");
+    }
   };
 
   const getInputClass = (value: string) =>
     `peer custom-input-field ${value ? "has-value" : ""}`;
 
+  if (userToken) {
+    return <Navigate to={"/"} replace />;
+  }
   return (
     <>
       <Helmet>
@@ -101,10 +133,11 @@ export const Login = () => {
 
           <div className="col-span-2">
             <button
+              disabled={isLoading}
               type="submit"
               className="w-full text-white bg-[#398b36] rounded-md py-3 cursor-pointer hover:bg-[#2c6b29] transition-all font-medium"
             >
-              Login
+              {isLoading ? "Loging..." : "Login"}
             </button>
           </div>
         </form>

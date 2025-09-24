@@ -2,14 +2,19 @@ import { Helmet } from "@dr.pogodin/react-helmet";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "../../redux/pages/auth/authSlice";
 import { AuthCommonHeader } from "../../shared/AuthCommonHeader";
 import { Logo } from "../../shared/Logo";
+import { getUserToken } from "../../utils/handleUserToken";
 
 export const Register = () => {
+  const userToken = getUserToken();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -19,27 +24,51 @@ export const Register = () => {
     confirmPassword: "",
   });
 
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
+  const [registerUser, { isLoading }] = useRegisterMutation();
 
-    if (!formData.firstName) return toast.error("First name is required.");
-    if (!formData.lastName) return toast.error("Last name is required.");
-    if (!formData.email) return toast.error("Email is required.");
-    if (!formData.password) return toast.error("Password is required.");
-    if (!formData.confirmPassword)
-      return toast.error("Confirm Password is required.");
-    if (formData.password !== formData.confirmPassword)
-      return toast.error("Passwords do not match.");
-    if (!agreeTerms)
-      return toast.error("You must agree to the Terms and Privacy Policy.");
+  const handleRegister = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
 
-    console.log(formData);
-    toast.success("Registration successful!");
+      if (!formData.firstName) return toast.error("First name is required.");
+      if (!formData.lastName) return toast.error("Last name is required.");
+      if (!formData.email) return toast.error("Email is required.");
+      if (!formData.password) return toast.error("Password is required.");
+      if (formData.password.trim().length < 8)
+        return toast.error("Password must be 8 charecter long.");
+
+      if (!formData.confirmPassword)
+        return toast.error("Confirm Password is required.");
+      if (formData.password !== formData.confirmPassword)
+        return toast.error("Passwords do not match.");
+      // if (!agreeTerms)
+      //   return toast.error("You must agree to the Terms and Privacy Policy.");
+
+      const res = await registerUser({
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        password_confirmation: formData.confirmPassword,
+        terms: agreeTerms,
+      }).unwrap();
+      if (res.status === 201) {
+        toast.success(res.message || "Register successful!");
+        navigate("/verify-account", { state: res.data.email });
+      } else {
+        toast.error(res.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      toast.error(error?.message || error?.data?.message || "Register failed!");
+    }
   };
 
   const getInputClass = (value: string) =>
     `peer custom-input-field ${value ? "has-value" : ""}`;
 
+  if (userToken) {
+    return <Navigate to={"/"} replace />;
+  }
   return (
     <>
       <Helmet>
@@ -172,10 +201,11 @@ export const Register = () => {
 
           <div className="col-span-2">
             <button
+              disabled={isLoading}
               type="submit"
               className="w-full text-white bg-[#398b36] rounded-md py-3 cursor-pointer hover:bg-[#2c6b29] transition-all font-medium"
             >
-              Create Account
+              {isLoading ? "Creating..." : "Create Account"}
             </button>
           </div>
         </form>

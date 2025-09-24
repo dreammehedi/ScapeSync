@@ -2,11 +2,21 @@ import { Helmet } from "@dr.pogodin/react-helmet";
 import { ChevronLeft } from "lucide-react";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { storeAuthData } from "../../redux/feature/authStoreSlice";
+import {
+  useResendOtpMutation,
+  useVerifyOtpMutation,
+} from "../../redux/pages/auth/authSlice";
 import { AuthCommonHeader } from "../../shared/AuthCommonHeader";
 import { Logo } from "../../shared/Logo";
+import { setUserToken } from "../../utils/handleUserToken";
 
 export const VerifyAccount = () => {
+  const location = useLocation();
+  const userEmail = location.state;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [code, setCode] = useState(Array(6).fill(""));
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
@@ -31,7 +41,6 @@ export const VerifyAccount = () => {
     const pasteData = e.clipboardData.getData("Text").trim().slice(0, 6);
     if (/^\d{1,6}$/.test(pasteData)) {
       const pasteCode = pasteData.split("");
-      console.log(pasteCode, "pasteCode");
       if (pasteCode.length !== 6) {
         toast.error("Confimation code must be 6 digit!");
         return;
@@ -42,16 +51,65 @@ export const VerifyAccount = () => {
     }
     e.preventDefault();
   };
+  const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
+  const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
 
-  const handleVerifyAccount = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (code.some((c) => !c)) {
-      return toast.error("Please enter the 6-digit code.");
+  const handleVerifyAccount = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+
+      if (code.some((c) => !c)) {
+        return toast.error("Please enter the 6-digit code.");
+      }
+
+      const otp = code.join("");
+      const res = await verifyOtp({
+        otp,
+        email: userEmail,
+      }).unwrap();
+
+      if (res.status) {
+        setUserToken(res.token);
+        dispatch(storeAuthData(res.data));
+        setCode(Array(6).fill(""));
+        toast.success(res.message || "Account verified successfully!");
+        navigate("/", { state: "" });
+      } else {
+        toast.error(res.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      toast.error(
+        error?.message || error?.data?.message || "OTP verification failed!"
+      );
     }
-    console.log("Verification code:", code.join(""));
-    toast.success("Account verified successfully!");
   };
 
+  const handleResendOtp = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+
+      if (!userEmail) {
+        return toast.error("User email address is required!");
+      }
+
+      const res = await resendOtp({
+        email: userEmail,
+      }).unwrap();
+
+      if (res.status === 201) {
+        toast.success(res.message || "New OTP sending successfully!");
+      } else {
+        toast.error(res.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      toast.error(
+        error?.message || error?.data?.message || "OTP sending failed!"
+      );
+    }
+  };
+  if (!userEmail) {
+    return <Navigate to={"/register"} replace />;
+  }
   return (
     <>
       <Helmet>
@@ -95,10 +153,11 @@ export const VerifyAccount = () => {
 
           <div className="col-span-2">
             <button
+              disabled={isLoading}
               type="submit"
               className="w-full text-white bg-[#398b36] rounded-md py-3 cursor-pointer hover:bg-[#2c6b29] transition-all font-medium mt-5"
             >
-              Verify
+              {isLoading ? "Verifying..." : "Verify"}
             </button>
           </div>
         </form>
@@ -106,7 +165,13 @@ export const VerifyAccount = () => {
         <div>
           <p className="flex items-center gap-x-1 text-sm mt-5">
             Don’t have a code?
-            <span className="text-[#398b36] cursor-pointer">Resend code</span>
+            <button
+              onClick={handleResendOtp}
+              className="text-[#398b36] cursor-pointer"
+              disabled={isResending}
+            >
+              {isResending ? "Resending..." : "Resend code"}
+            </button>
           </p>
         </div>
       </main>
