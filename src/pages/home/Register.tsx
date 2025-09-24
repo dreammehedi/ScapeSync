@@ -170,7 +170,10 @@ export const Register = () => {
           </div>
 
           <div className="col-span-2">
-            <button className="w-full text-white bg-[#398b36] rounded-md py-3 cursor-pointer hover:bg-[#2c6b29] transition-all font-medium">
+            <button
+              type="submit"
+              className="w-full text-white bg-[#398b36] rounded-md py-3 cursor-pointer hover:bg-[#2c6b29] transition-all font-medium"
+            >
               Create Account
             </button>
           </div>
