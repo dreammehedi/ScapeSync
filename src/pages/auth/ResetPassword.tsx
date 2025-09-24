@@ -47,16 +47,6 @@ export const ResetPassword = () => {
             we'll email you a link to reset your password."
         />
 
-        {/* <div className="flex flex-col mb-6 md:mb-8 lg:mb-10 ">
-          <h2 className="text-xl md:text-2xl font-bold">
-            Forgot your password?
-          </h2>
-          <p className="text-gray-500">
-            Please enter the email address associated with your account, and
-            we'll email you a link to reset your password.
-          </p>
-        </div> */}
-
         <form
           onSubmit={handleResetPassword}
           className="grid grid-cols-2 gap-5 w-full"

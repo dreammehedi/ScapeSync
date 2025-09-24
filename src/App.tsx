@@ -1,5 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
+import { AuthSuccess } from "./pages/auth/AuthSuccess";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
 import { ResetPassword } from "./pages/auth/ResetPassword";
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/auth-success" element={<AuthSuccess />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<ErrorPage />} />
