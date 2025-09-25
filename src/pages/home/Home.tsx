@@ -1,4 +1,6 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
+import { Navbar } from "../../shared/Navbar";
+import { Hero } from "./components/Hero";
 
 function Home() {
   return (
@@ -6,7 +8,15 @@ function Home() {
       <Helmet>
         <title>Home | ScapeSync</title>
       </Helmet>
-      <h1 className="container mx-auto"> Home</h1>
+      <header
+        className="
+    w-full !bg-no-repeat !bg-cover !bg-center
+    bg-none lg:bg-[url('/hero-bg.png')]
+  "
+      >
+        <Navbar />
+        <Hero />
+      </header>
     </>
   );
 }

@@ -40,7 +40,6 @@ export const Login = () => {
         remember_me: isRemember,
       }).unwrap();
 
-      console.log(res, "on res");
       if (res.status) {
         setUserToken(res.token);
         dispatch(storeAuthData(res.data));

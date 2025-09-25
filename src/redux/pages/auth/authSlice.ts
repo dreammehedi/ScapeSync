@@ -144,6 +144,7 @@ export const authSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: "/logout",
         method: "POST",
+        headers: {},
       }),
     }),
 
