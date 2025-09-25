@@ -34,15 +34,13 @@ export const Register = () => {
       if (!formData.lastName) return toast.error("Last name is required.");
       if (!formData.email) return toast.error("Email is required.");
       if (!formData.password) return toast.error("Password is required.");
-      if (formData.password.trim().length < 8)
-        return toast.error("Password must be 8 charecter long.");
+      if (formData.password.trim().length < 6)
+        return toast.error("Password must be 6 charecter long.");
 
       if (!formData.confirmPassword)
         return toast.error("Confirm Password is required.");
       if (formData.password !== formData.confirmPassword)
         return toast.error("Passwords do not match.");
-      // if (!agreeTerms)
-      //   return toast.error("You must agree to the Terms and Privacy Policy.");
 
       const res = await registerUser({
         first_name: formData.firstName,
@@ -54,7 +52,9 @@ export const Register = () => {
       }).unwrap();
       if (res.status === 201) {
         toast.success(res.message || "Register successful!");
-        navigate("/verify-account", { state: res.data.email });
+        navigate("/verify-account", {
+          state: { email: res.data.email, isOtpVerify: false },
+        });
       } else {
         toast.error(res.message || "Something went wrong!");
       }

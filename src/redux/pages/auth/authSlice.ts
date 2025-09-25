@@ -107,6 +107,39 @@ export const authSlice = apiSlice.injectEndpoints({
       }),
     }),
 
+    forgotPassword: builder.mutation<
+      { status: number; message: string; data: { otp: string } },
+      { email: string }
+    >({
+      query: (data) => ({
+        url: "forgot-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    resetPassword: builder.mutation<
+      { status: number; message: string; data: [] },
+      { password: string; password_confirmation: string; token: string }
+    >({
+      query: (data) => ({
+        url: "reset-password",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    forgotVerifyOtp: builder.mutation<
+      { status: number; message: string; data: { token: string } },
+      { email: string; otp: string }
+    >({
+      query: (data) => ({
+        url: "forgot-verify-otp",
+        method: "POST",
+        body: data,
+      }),
+    }),
+
     logout: builder.mutation<LogoutResponse, void>({
       query: () => ({
         url: "/logout",
@@ -144,5 +177,8 @@ export const {
   useVerifyOtpMutation,
   useResendOtpMutation,
   useLogoutMutation,
+  useForgotPasswordMutation,
+  useForgotVerifyOtpMutation,
+  useResetPasswordMutation,
   useGetUserQuery,
 } = authSlice;
