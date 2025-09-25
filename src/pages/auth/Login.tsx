@@ -39,6 +39,8 @@ export const Login = () => {
         password: formData.password,
         remember_me: isRemember,
       }).unwrap();
+
+      console.log(res, "on res");
       if (res.status) {
         setUserToken(res.token);
         dispatch(storeAuthData(res.data));
@@ -50,6 +52,13 @@ export const Login = () => {
         toast.error(res.message || "Something went wrong!");
       }
     } catch (error: any) {
+      console.log(error, "on error");
+      if (error.status === 300) {
+        toast.error(
+          error?.data.message || "At first verify your email address!"
+        );
+        navigate("/verify-account", { state: error.data.data.email });
+      }
       toast.error(error?.message || error?.data?.message || "Login failed!");
     }
   };
