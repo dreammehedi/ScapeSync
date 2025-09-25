@@ -35,7 +35,7 @@ export const Footer = () => {
 
       {/* social network */}
       <section className="container mx-auto px-4 pb-8 md:pb-12 ">
-        <SocialNetwork cls="!justify-center" />
+        <SocialNetwork cls="!justify-center lg:!justify-start" />
       </section>
 
       {/* footer bottom */}

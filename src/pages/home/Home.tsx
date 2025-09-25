@@ -2,6 +2,7 @@ import { Helmet } from "@dr.pogodin/react-helmet";
 import { Footer } from "../../shared/Footer";
 import { Navbar } from "../../shared/Navbar";
 import { Hero } from "./components/Hero";
+import SiteFeatures from "./components/SiteFeatures";
 
 function Home() {
   return (
@@ -18,6 +19,7 @@ function Home() {
         <Navbar />
         <Hero />
       </header>
+      <SiteFeatures />
       <Footer />
     </>
   );
