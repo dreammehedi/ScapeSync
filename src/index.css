@@ -35,3 +35,23 @@ w-full bg-transparent border border-gray-300 rounded-md px-2 py-3 transition-all
     }
   }
 }
+
+/* For Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #398b36;
+  border-radius: 10px;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #398b36 transparent;
+}

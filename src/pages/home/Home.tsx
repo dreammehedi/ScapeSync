@@ -1,4 +1,5 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
+import { Footer } from "../../shared/Footer";
 import { Navbar } from "../../shared/Navbar";
 import { Hero } from "./components/Hero";
 
@@ -17,6 +18,7 @@ function Home() {
         <Navbar />
         <Hero />
       </header>
+      <Footer />
     </>
   );
 }

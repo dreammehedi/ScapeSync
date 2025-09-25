@@ -1,6 +1,8 @@
+import SiteStore from "../../../shared/SiteStore";
+
 export const Hero = () => {
   return (
-    <div className="container mx-auto px-4 h-[calc(100vh-96px)] max-h-[700px]">
+    <div className="container mx-auto px-4 h-[calc(100vh-96px)] lg:max-h-[700px]">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-center h-full">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left gap-y-3 md:gap-y-4 py-5 md:py-4 lg:py-0">
           <div className="relative">
@@ -35,24 +37,16 @@ export const Hero = () => {
             app.
           </p>
           <br />
-          <div className="flex items-center justify-center lg:justify-start gap-3 flex-wrap">
-            <img
-              src="/app-store.png"
-              alt="App Store"
-              className="w-[160px] h-[50px] object-fill"
-            />
-            <img
-              src="/google-play-store.png"
-              alt="Google Play Store"
-              className="w-[160px] h-[50px] object-fill"
-            />
-          </div>
+          <SiteStore
+            appStore="/app-store.png"
+            playStore="/google-play-store.png"
+          />
         </div>
         <div className="lg:hidden">
           <img
             src="/mobile-hand-phone.png"
             alt="Mobile Hand Phone"
-            className="mix-blend-multiply"
+            className="mix-blend-multiply max-h-[350px] w-auto mx-auto"
           />
         </div>
       </div>
