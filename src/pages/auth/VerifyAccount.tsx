@@ -40,7 +40,7 @@ export const VerifyAccount = () => {
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement | null>) => {
     const pasteData = e.clipboardData.getData("Text").trim().slice(0, 6);
     if (/^\d{1,6}$/.test(pasteData)) {
       const pasteCode = pasteData.split("");
@@ -186,7 +186,10 @@ export const VerifyAccount = () => {
                 value={digit}
                 onChange={(e) => handleChange(e, index)}
                 onPaste={handlePaste}
-                ref={(el) => (inputsRef.current[index] = el)}
+                // ref={(el) => (inputsRef.current[index] = el)}
+                ref={(el) => {
+                  inputsRef.current[index] = el;
+                }}
                 className="w-12 h-12 text-center border border-gray-300 rounded-md text-lg focus:border-[#398b36] focus:outline-none"
               />
             ))}
