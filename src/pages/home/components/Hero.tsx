@@ -4,8 +4,17 @@ export const Hero = () => {
   return (
     <div className="container mx-auto px-4 h-fit lg:h-[calc(100vh-96px)] xl:max-h-[700px]">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-center h-full">
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left gap-y-3 md:gap-y-4 py-5 md:py-4 lg:py-0">
-          <div className="relative">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="500"
+          className="flex flex-col items-center text-center lg:items-start lg:text-left gap-y-3 md:gap-y-4 py-5 md:py-4 lg:py-0"
+        >
+          <div
+            data-aos="slide-left"
+            data-aos-duration="800"
+            data-aos-delay={200}
+            className="relative pt-8 md:pt-6 lg:pt-0"
+          >
             <h1 className="lg:hidden font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl max-w-[450px]">
               All Your Jobs One Smart App
             </h1>
@@ -31,18 +40,19 @@ export const Hero = () => {
             </h1>
           </div>
 
-          <p>
+          <p data-aos="slide-left" data-aos-duration="800" data-aos-delay={300}>
             Built for business owners, employees, and clients streamline job
             scheduling, service tracking, and team management in one powerful
             app.
           </p>
           <br />
           <SiteStore
+            isHero={true}
             appStore="/app-store.png"
             playStore="/google-play-store.png"
           />
         </div>
-        <div className="lg:hidden">
+        <div data-aos="slide-up" data-aos-duration="500" className="lg:hidden">
           <img
             src="/mobile-hand-phone.png"
             alt="Mobile Hand Phone"

@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 
 export default function ErrorPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
+    <div
+      data-aos="zoom-in"
+      className="flex items-center justify-center min-h-screen bg-gray-50 px-4"
+    >
       <div className="text-center">
         <h1 className="text-9xl font-extrabold text-gray-300">404</h1>
 

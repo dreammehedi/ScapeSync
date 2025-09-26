@@ -18,7 +18,10 @@ export const AuthSuccess = () => {
 
       <Logo />
 
-      <main className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-96px)] px-4 max-w-[480px]">
+      <main
+        data-aos="zoom-in"
+        className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-96px)] px-4 max-w-[480px]"
+      >
         <img src="auth-success-img.png" alt="Auth Success" />
         <br />
         <AuthCommonHeader title={title} description={description} />

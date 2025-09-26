@@ -38,16 +38,20 @@ export const Faqs = () => {
 
       <div className="mt-8 md:mt-10 lg:mt-12 container mx-auto px-4">
         <div className="max-w-3xl mx-auto space-y-3">
-          {faqsData.map((faq) => (
+          {faqsData.map((faq, index) => (
             <div
               key={faq.id}
               className="border border-green-100/80 p-3 rounded-2xl"
+              data-aos="slide-left"
+              data-aos-duration="800"
+              data-aos-delay={index * 100}
+              data-aos-once="true"
             >
               <button
                 onClick={() => toggleAccordion(faq.id)}
-                className="w-full flex justify-between items-center py-3 "
+                className="w-full flex justify-between items-center py-3"
               >
-                <span>{faq.question}</span>
+                <span className="text-left">{faq.question}</span>
                 <span
                   className={`smooth-transition ${
                     openId === faq.id ? "rotate-180" : ""

@@ -1,6 +1,7 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
 import { Link } from "react-router-dom";
-import { Logo } from "../shared/Logo";
+import { Footer } from "../shared/Footer";
+import { Navbar } from "../shared/Navbar";
 
 export default function TermsOfService() {
   return (
@@ -9,9 +10,12 @@ export default function TermsOfService() {
         <title>Terms of Service | ScapeSync</title>
       </Helmet>
 
-      <Logo />
-      <div className="mx-4">
-        <main className="container mx-auto max-w-3xl px-4 py-10 bg-white rounded-md shadow-md">
+      <Navbar />
+      <div className="mx-4 py-8 md:py-10 lg:py-12">
+        <main
+          data-aos="fade-up"
+          className="container mx-auto max-w-3xl px-4 py-10 bg-white rounded-md shadow-md"
+        >
           <h1 className="text-3xl font-bold mb-6">Terms of Service</h1>
 
           <p className="text-gray-700 mb-4">
@@ -45,6 +49,7 @@ export default function TermsOfService() {
           </p>
         </main>
       </div>
+      <Footer />
     </>
   );
 }

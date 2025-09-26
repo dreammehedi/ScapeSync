@@ -47,26 +47,67 @@ export const BuildEveryone = () => {
         <div
           className={`flex flex-col justify-center items-center text-center gap-y-1`}
         >
-          <h1 className="text-xl md:text-2xl lg:text-3xl xl:text-4 font-bold">
-            Build for Everyone
+          <h1
+            data-aos="slide-up"
+            className="text-xl md:text-2xl lg:text-3xl xl:text-4 font-bold flex flex-wrap items-center gap-x-2 leading-snug "
+          >
+            Build for
+            <span className="relative inline-block">
+              Everyone
+              <img
+                src="/shape-3.png"
+                alt="Decoration"
+                className="absolute -bottom-8 left-0 w-full "
+              />
+            </span>
           </h1>
+
           <br />
-          <p className="text-sm text-gray-400 max-w-md mx-auto">
+          <p
+            data-aos="slide-up"
+            data-aos-delay="100"
+            className="text-sm text-gray-400 max-w-md mx-auto"
+          >
             Whether you're booking services, managing tasks, or running
             operations, we've designed the perfect experience for you.
           </p>
         </div>
       </div>
 
-      <div className="mt-8 md:mt-10 lg:mt-12 container mx-auto px-4 space-y-12">
+      <div className="mt-8 md:mt-10 lg:mt-12 container mx-auto px-4 space-y-12 relative z-10">
+        <img
+          src="/shape-4.png"
+          alt="shape-4"
+          className="hidden md:inline-block absolute top-[-55px] left-[90px] z-0 md:max-h-[60px] max-h-[120px]"
+        />
+        <img
+          src="/shape-6.png"
+          alt="shape-6"
+          className="hidden md:inline-block absolute top-[0px] right-1/2 z-0 md:max-h-[750px] max-h-[1000px]"
+        />
+        <img
+          src="/shape-5.png"
+          alt="shape-5"
+          className="hidden md:inline-block absolute top-[-70px] right-[0px] z-0 md:max-h-[400px] max-h-[600px] "
+        />
         {buildEveryoneData.map((build, ind) => (
           <div
             key={build.id}
             className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+            data-aos={ind % 2 === 0 ? "fade-right" : "fade-left"} // slide direction based on index
+            data-aos-duration="800"
+            data-aos-once="true" // animation happens only once when visible
           >
             {/* Text Block */}
-            <div className={`relative ${ind % 2 !== 0 ? "md:order-2" : ""}`}>
-              {/* Conditional Glow for even/odd */}
+            <div
+              className={`relative overflow-hidden ${
+                ind % 2 !== 0 ? "md:order-2" : ""
+              }`}
+              data-aos="fade-up"
+              data-aos-duration="900"
+              data-aos-delay="100"
+              data-aos-once="true"
+            >
               {ind % 2 === 0 ? (
                 <div className="absolute -top-8 -left-8 w-40 h-40 rounded-full bg-green-100 opacity-50 blur-3xl"></div>
               ) : (
@@ -93,7 +134,6 @@ export const BuildEveryone = () => {
                   ];
                   const borderClass =
                     borderClasses[ind] || "border-green-500/30";
-
                   return (
                     <li
                       key={ind}
@@ -107,14 +147,18 @@ export const BuildEveryone = () => {
             </div>
 
             {/* Image Block */}
-            <div className="relative flex items-center justify-center">
-              {/* Circular Glow */}
+            <div
+              className="relative flex items-center justify-center"
+              data-aos="zoom-in"
+              data-aos-duration="1000"
+              data-aos-delay="150"
+              data-aos-once="true"
+            >
               <div className="absolute w-60 h-60 rounded-full bg-green-200 opacity-50 blur-3xl"></div>
-
               <img
                 src={build.image}
                 alt={build.title}
-                className="relative z-10 w-full h-auto rounded-xl"
+                className="relative z-10 md:w-full rounded-xl h-auto w-[90%]"
               />
             </div>
           </div>

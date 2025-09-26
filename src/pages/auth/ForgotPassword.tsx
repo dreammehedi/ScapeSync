@@ -51,7 +51,10 @@ export const ForgotPassword = () => {
 
       <Logo />
 
-      <main className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-96px)] px-4 max-w-[480px]">
+      <main
+        data-aos="zoom-in"
+        className="container mx-auto flex flex-col items-center justify-center min-h-[calc(100vh-96px)] px-4 max-w-[480px]"
+      >
         <div
           onClick={() => navigate(-1)}
           className="flex items-center justify-start mr-auto mb-8 gap-x-2 text-[#398b36] text-sm cursor-pointer"
