@@ -47,7 +47,7 @@ const SiteFeatures = () => {
                 className={`py-6 md:py-0 flex flex-col gap-y-1 justify-center md:justify-start items-center md:items-start text-center md:text-left ${borderClass}`}
               >
                 <img
-                  className="size-[42px] object-cover mb-5"
+                  className="size-[48px] md:size-[42px] object-cover mb-5"
                   src={feature.icon}
                   alt={feature.icon}
                 />

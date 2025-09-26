@@ -47,7 +47,7 @@ export const Faqs = () => {
                 onClick={() => toggleAccordion(faq.id)}
                 className="w-full flex justify-between items-center py-3 "
               >
-                <span>{faq.question}</span>
+                <span className="text-left">{faq.question}</span>
                 <span
                   className={`smooth-transition ${
                     openId === faq.id ? "rotate-180" : ""

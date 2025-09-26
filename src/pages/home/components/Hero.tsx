@@ -5,7 +5,7 @@ export const Hero = () => {
     <div className="container mx-auto px-4 h-fit lg:h-[calc(100vh-96px)] xl:max-h-[700px]">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-center h-full">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left gap-y-3 md:gap-y-4 py-5 md:py-4 lg:py-0">
-          <div className="relative">
+          <div className="relative pt-8 md:pt-6 lg:pt-0">
             <h1 className="lg:hidden font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl max-w-[450px]">
               All Your Jobs One Smart App
             </h1>
