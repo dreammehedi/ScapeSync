@@ -1,6 +1,7 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
 import { Footer } from "../../shared/Footer";
 import { Navbar } from "../../shared/Navbar";
+import { BuildEveryone } from "./components/BuildEveryone";
 import { Faqs } from "./components/Faqs";
 import { Hero } from "./components/Hero";
 import SiteFeatures from "./components/SiteFeatures";
@@ -22,6 +23,7 @@ function Home() {
         <Hero />
       </header>
       <SiteFeatures />
+      <BuildEveryone />
       <Testimonials />
       <Faqs />
       <Footer />
