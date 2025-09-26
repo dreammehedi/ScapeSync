@@ -36,7 +36,7 @@ export const Navbar = () => {
   const [showUserInfo, setShowUserInfo] = useState(false);
 
   return (
-    <nav className="container mx-auto px-4 py-2 sticky top-0 bg-white/90 z-[999] w-full">
+    <nav className="container mx-auto px-4 py-2 sticky top-0 bg-white/90 z-[999] w-full !overflow-visible backdrop-blur-md ">
       <div className="flex flex-wrap gap-3 justify-between items-center relative">
         <Link data-aos="slide-right" to={"/"}>
           <img
