@@ -6,6 +6,9 @@
   body {
     font-family: "Public Sans", sans-serif;
   }
+  .container {
+    @apply overflow-hidden;
+  }
 }
 
 @layer components {
