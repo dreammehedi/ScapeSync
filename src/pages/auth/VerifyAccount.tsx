@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { storeAuthData } from "../../redux/feature/authStoreSlice";
 import {
+  useForgotVerifyOtpMutation,
   useResendOtpMutation,
   useVerifyOtpMutation,
 } from "../../redux/pages/auth/authSlice";
@@ -15,7 +16,9 @@ import { setUserToken } from "../../utils/handleUserToken";
 
 export const VerifyAccount = () => {
   const location = useLocation();
-  const userEmail = location.state;
+  const userEmail = location.state.email;
+  const isOtpVerify = location.state.isOtpVerify || false;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [code, setCode] = useState(Array(6).fill(""));
@@ -37,7 +40,7 @@ export const VerifyAccount = () => {
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement | null>) => {
     const pasteData = e.clipboardData.getData("Text").trim().slice(0, 6);
     if (/^\d{1,6}$/.test(pasteData)) {
       const pasteCode = pasteData.split("");
@@ -53,6 +56,8 @@ export const VerifyAccount = () => {
   };
   const [verifyOtp, { isLoading }] = useVerifyOtpMutation();
   const [resendOtp, { isLoading: isResending }] = useResendOtpMutation();
+  const [forgotVerifyOtp, { isLoading: isVerifying }] =
+    useForgotVerifyOtpMutation();
 
   const handleVerifyAccount = async (e: React.FormEvent) => {
     try {
@@ -63,6 +68,7 @@ export const VerifyAccount = () => {
       }
 
       const otp = code.join("");
+
       const res = await verifyOtp({
         otp,
         email: userEmail,
@@ -73,7 +79,41 @@ export const VerifyAccount = () => {
         dispatch(storeAuthData(res.data));
         setCode(Array(6).fill(""));
         toast.success(res.message || "Account verified successfully!");
-        navigate("/", { state: "" });
+
+        navigate("/auth-success", {
+          state: {
+            title: "Account Created Successfully!",
+            description:
+              "Your account is set up! Just verify your email to get started.",
+          },
+        });
+      } else {
+        toast.error(res.message || "Something went wrong!");
+      }
+    } catch (error: any) {
+      toast.error(
+        error?.message || error?.data?.message || "OTP verification failed!"
+      );
+    }
+  };
+
+  const handleForgotOtp = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+
+      if (code.some((c) => !c)) {
+        return toast.error("Please enter the 6-digit code.");
+      }
+
+      const otp = code.join("");
+
+      const res = await forgotVerifyOtp({
+        otp,
+        email: userEmail,
+      }).unwrap();
+
+      if (res.status === 201 && res.data.token) {
+        navigate("/reset-password", { state: { token: res.data.token } });
       } else {
         toast.error(res.message || "Something went wrong!");
       }
@@ -107,6 +147,7 @@ export const VerifyAccount = () => {
       );
     }
   };
+
   if (!userEmail) {
     return <Navigate to={"/register"} replace />;
   }
@@ -129,11 +170,11 @@ export const VerifyAccount = () => {
         <AuthCommonHeader
           cls="!justify-start !text-left !items-start"
           title="Please check your email!"
-          description="We've emailed a 6-digit confirmation code to acb@domain, please enter the code in below boxes to verify your email."
+          description={`We've emailed a 6-digit confirmation code to ${userEmail}, please enter the code in below boxes to verify your email.`}
         />
 
         <form
-          onSubmit={handleVerifyAccount}
+          onSubmit={isOtpVerify ? handleForgotOtp : handleVerifyAccount}
           className="grid grid-cols-2 gap-5 w-full"
         >
           <div className="col-span-2 flex justify-between gap-2">
@@ -145,7 +186,10 @@ export const VerifyAccount = () => {
                 value={digit}
                 onChange={(e) => handleChange(e, index)}
                 onPaste={handlePaste}
-                ref={(el) => (inputsRef.current[index] = el)}
+                // ref={(el) => (inputsRef.current[index] = el)}
+                ref={(el) => {
+                  inputsRef.current[index] = el;
+                }}
                 className="w-12 h-12 text-center border border-gray-300 rounded-md text-lg focus:border-[#398b36] focus:outline-none"
               />
             ))}
@@ -153,11 +197,11 @@ export const VerifyAccount = () => {
 
           <div className="col-span-2">
             <button
-              disabled={isLoading}
+              disabled={isLoading || isVerifying}
               type="submit"
               className="w-full text-white bg-[#398b36] rounded-md py-3 cursor-pointer hover:bg-[#2c6b29] transition-all font-medium mt-5"
             >
-              {isLoading ? "Verifying..." : "Verify"}
+              {isLoading || isVerifying ? "Verifying..." : "Verify"}
             </button>
           </div>
         </form>

@@ -1,4 +1,11 @@
 import { Helmet } from "@dr.pogodin/react-helmet";
+import { Footer } from "../../shared/Footer";
+import { Navbar } from "../../shared/Navbar";
+import { BuildEveryone } from "./components/BuildEveryone";
+import { Faqs } from "./components/Faqs";
+import { Hero } from "./components/Hero";
+import SiteFeatures from "./components/SiteFeatures";
+import { Testimonials } from "./components/Testimonials";
 
 function Home() {
   return (
@@ -6,7 +13,20 @@ function Home() {
       <Helmet>
         <title>Home | ScapeSync</title>
       </Helmet>
-      <h1 className="container mx-auto"> Home</h1>
+      <header
+        className="
+    w-full !bg-no-repeat !bg-cover !bg-center
+    bg-none lg:bg-[url('/hero-bg.png')]
+  "
+      >
+        <Navbar />
+        <Hero />
+      </header>
+      <SiteFeatures />
+      <BuildEveryone />
+      <Testimonials />
+      <Faqs />
+      <Footer />
     </>
   );
 }

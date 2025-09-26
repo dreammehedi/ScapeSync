@@ -31,14 +31,15 @@ export const Login = () => {
 
       if (!formData.email) return toast.error("Email is required.");
       if (!formData.password) return toast.error("Password is required.");
-      if (formData.password.trim().length < 8)
-        return toast.error("Password must be 8 charecter long.");
+      if (formData.password.trim().length < 6)
+        return toast.error("Password must be 6 charecter long.");
 
       const res = await loginUser({
         email: formData.email,
         password: formData.password,
         remember_me: isRemember,
       }).unwrap();
+
       if (res.status) {
         setUserToken(res.token);
         dispatch(storeAuthData(res.data));
@@ -50,6 +51,14 @@ export const Login = () => {
         toast.error(res.message || "Something went wrong!");
       }
     } catch (error: any) {
+      if (error.status === 300) {
+        toast.error(
+          error?.data.message || "At first verify your email address!"
+        );
+        navigate("/verify-account", {
+          state: { email: error.data.data.email, isOtpVerify: false },
+        });
+      }
       toast.error(error?.message || error?.data?.message || "Login failed!");
     }
   };
@@ -126,7 +135,7 @@ export const Login = () => {
             </label>
           </div>
           <div className="w-full flex items-center justify-end gap-2">
-            <Link to={"/reset-password"} className="text-[#398b36]">
+            <Link to={"/forgot-password"} className="text-[#398b36]">
               Forgot password?
             </Link>
           </div>
