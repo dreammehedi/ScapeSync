@@ -36,9 +36,9 @@ export const Navbar = () => {
   const [showUserInfo, setShowUserInfo] = useState(false);
 
   return (
-    <nav className="container mx-auto px-4 py-2">
+    <nav className="container mx-auto px-4 py-2 sticky top-0 bg-white/90 z-[999] w-full">
       <div className="flex flex-wrap gap-3 justify-between items-center relative">
-        <Link to={"/"}>
+        <Link data-aos="slide-right" to={"/"}>
           <img
             className="max-w-[135px] max-h-[56px] mx-auto md:mx-0 cursor-pointer"
             src="/logo.png"
@@ -48,6 +48,7 @@ export const Navbar = () => {
 
         {token ? (
           <div
+            data-aos="slide-left"
             className="relative"
             onMouseEnter={() => setShowUserInfo(true)}
             onMouseLeave={() => setShowUserInfo(false)}
@@ -78,7 +79,7 @@ export const Navbar = () => {
             )}
           </div>
         ) : (
-          <Link to={"/login"}>
+          <Link data-aos="slide-left" to={"/login"}>
             <button
               type="submit"
               className="w-[150px] text-white bg-[#398b36] rounded-md py-2 cursor-pointer hover:bg-[#2c6b29] transition-all font-medium"

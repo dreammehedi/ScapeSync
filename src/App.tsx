@@ -1,3 +1,6 @@
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { Route, Routes } from "react-router-dom";
 import { AuthSuccess } from "./pages/auth/AuthSuccess";
@@ -12,6 +15,13 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      offset: 100,
+    });
+    AOS.refresh();
+  }, []);
   return (
     <>
       <Routes>

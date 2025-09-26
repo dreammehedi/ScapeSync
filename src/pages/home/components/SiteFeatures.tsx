@@ -43,6 +43,9 @@ const SiteFeatures = () => {
 
             return (
               <div
+                data-aos="fade-right"
+                data-aos-duration="1000"
+                data-aos-delay={index * 100}
                 key={feature.id}
                 className={`py-6 md:py-0 flex flex-col gap-y-1 justify-center md:justify-start items-center md:items-start text-center md:text-left ${borderClass}`}
               >
