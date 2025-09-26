@@ -3,6 +3,7 @@ import { Footer } from "../../shared/Footer";
 import { Navbar } from "../../shared/Navbar";
 import { Hero } from "./components/Hero";
 import SiteFeatures from "./components/SiteFeatures";
+import { Testimonials } from "./components/Testimonials";
 
 function Home() {
   return (
@@ -20,6 +21,7 @@ function Home() {
         <Hero />
       </header>
       <SiteFeatures />
+      <Testimonials />
       <Footer />
     </>
   );

@@ -37,7 +37,7 @@ export const Navbar = () => {
 
   return (
     <nav className="container mx-auto px-4 py-2">
-      <div className="flex justify-between items-center relative">
+      <div className="flex flex-wrap gap-3 justify-between items-center relative">
         <Link to={"/"}>
           <img
             className="max-w-[135px] max-h-[56px] mx-auto md:mx-0 cursor-pointer"
